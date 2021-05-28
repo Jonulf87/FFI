@@ -65,7 +65,7 @@ namespace FFI.BLL
                 }
             };
 
-            await _ffiContext.Vehicles.AddAsync(Vehicle);
+            _ffiContext.Vehicles.Add(Vehicle);
             await _ffiContext.SaveChangesAsync();
             return Vehicle.Id;
         }
