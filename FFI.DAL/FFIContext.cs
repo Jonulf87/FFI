@@ -18,6 +18,5 @@ namespace FFI.DAL
 
         public DbSet<Location> Locations { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
-
     }
 }

@@ -19,7 +19,7 @@ namespace FFI.BLL
             _ffiContext = ffiContext;
         }
 
-        public async Task<List<VehicleLocationDTO>> GetAllVehicleLocations()
+        public async Task<List<VehicleLocationDTO>> GetAllVehicleLocationsAsync()
         {
             return await _ffiContext.Vehicles
                 .Select(a => new VehicleLocationDTO
@@ -32,7 +32,7 @@ namespace FFI.BLL
                 }).ToListAsync();
         }
 
-        public async Task SetVehicleLocation(SetVehicleLocationDTO location)
+        public async Task SetVehicleLocationAsync(SetVehicleLocationDTO location)
         {
             var storedVehicle = await _ffiContext.Vehicles
                 .FindAsync(location.Id);
