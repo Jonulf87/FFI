@@ -35,25 +35,37 @@ namespace FFI.BLL
         public async Task SetVehicleLocationAsync(SetVehicleLocationDTO location)
         {
             var storedVehicle = await _ffiContext.Vehicles
-                .FindAsync(location.Id);
+                .Include(a => a.Location)
+                .FirstOrDefaultAsync(a => a.Id == location.Id);
 
             if (storedVehicle == null)
             {
                 return; //Eller en exception
             }
 
-            storedVehicle.Location = new Location
+            if (storedVehicle.Location == null)
             {
-                Latitude = location.Latitude,
-                Longitude = location.Longitude
-            };
+                storedVehicle.Location = new Location
+                {
+                    Latitude = location.Latitude,
+                    Longitude = location.Longitude
+                };
+
+            }
+            else
+            {
+                storedVehicle.Location.Latitude = location.Latitude;
+                storedVehicle.Location.Longitude = location.Longitude;
+            }
+
+
 
             await _ffiContext.SaveChangesAsync(); //Tracking sørger for vehicle blir oppdatert
         }
 
         public async Task<int> RegisterVehicleAsync(RegisterVehicleDTO vehicle)
         {
-            
+
             var Vehicle = new Vehicle
             {
                 Description = vehicle.Description,
